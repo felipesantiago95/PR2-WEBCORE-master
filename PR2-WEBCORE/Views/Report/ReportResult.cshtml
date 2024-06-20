@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PR2_WEBCORE.Models.Sale>
+
+@{
+    ViewData["Title"] = "Resultados del Reporte";
+}
+
+<h2>Resultados del Reporte de Ventas</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID de Venta</th>
+            <th>Usuario</th>
+            <th>Establecimiento</th>
+            <th>Categoría</th>
+            <th>Aforo</th>
+            <th>Clase</th>
+            <th>Total</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model)
+        {
+            <tr>
+                <td>@sale.IdSales</td>
+                <td>@GetTextFromSelectList(ViewBag.Usuarios, (int)sale.IdUsuario)</td>
+                <td>@GetTextFromSelectList(ViewBag.Establecimientos, (int)sale.IdEstablecimiento)</td>
+                <td>@GetTextFromSelectList(ViewBag.Categorias, (int)sale.IdCategoria)</td>
+                <td>@GetTextFromSelectList(ViewBag.Aforos, (int)sale.IdAforo)</td>
+                <td>@GetTextFromSelectList(ViewBag.Clases, (int)sale.IdClase)</td>
+                <td>@sale.Total</td>
+                <td>@sale.FechaCreacion.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index">Generar otro reporte</a>
+
+@functions {
+    public string GetTextFromSelectList(List<SelectListItem> selectList, int selectedValue)
+    {
+        var item = selectList.FirstOrDefault(i => i.Value == selectedValue.ToString());
+        return item != null ? item.Text : "No encontrado";
+    }
+}

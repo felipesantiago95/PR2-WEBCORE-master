@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Generar Reporte";
+}
+
+<h2>Generar Reporte de Ventas</h2>
+
+<form asp-action="GenerateReport" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="startDate">Fecha de Inicio</label>
+            <input type="date" id="startDate" name="startDate" class="form-control" />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="endDate">Fecha de Fin</label>
+            <input type="date" id="endDate" name="endDate" class="form-control" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="userId">Usuario</label>
+            <select id="userId" name="userId" class="form-control">
+                <option value="">Seleccione un usuario</option>
+                @foreach (var usuario in ViewBag.Usuarios)
+                {
+                    <option value="@usuario.Value">@usuario.Text</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="establishmentId">Establecimiento</label>
+            <select id="establishmentId" name="establishmentId" class="form-control">
+                <option value="">Seleccione un establecimiento</option>
+                @foreach (var establecimiento in ViewBag.Establecimientos)
+                {
+                    <option value="@establecimiento.Value">@establecimiento.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="categoryId">Categoría</label>
+            <select id="categoryId" name="categoryId" class="form-control">
+                <option value="">Seleccione una categoría</option>
+                @foreach (var categoria in ViewBag.Categorias)
+                {
+                    <option value="@categoria.Value">@categoria.Text</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="aforoId">Aforo</label>
+            <select id="aforoId" name="aforoId" class="form-control">
+                <option value="">Seleccione un aforo</option>
+                @foreach (var aforo in ViewBag.Aforos)
+                {
+                    <option value="@aforo.Value">@aforo.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="classId">Clase</label>
+            <select id="classId" name="classId" class="form-control">
+                <option value="">Seleccione una clase</option>
+                @foreach (var clase in ViewBag.Clases)
+                {
+                    <option value="@clase.Value">@clase.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Generar Reporte</button>
+</form>

@@ -1,0 +1,27 @@
+﻿@model PR2_WEBCORE.Models.UsuarioRol
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Crear UsuarioRol</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Crear Nuevo Rol de Usuario</h2>
+
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label for="IdUsuario">Usuario</label>
+                <select asp-for="IdUsuario" class="form-control" asp-items="@(new SelectList(ViewBag.Usuarios, "IdUsuario", "Nombre"))"></select>
+            </div>
+            <div class="form-group">
+                <label for="IdRoles">Rol</label>
+                <select asp-for="IdRoles" class="form-control" asp-items="@(new SelectList(ViewBag.Roles, "IdRol", "Descripcion"))"></select>
+            </div>
+            <button type="submit" class="btn btn-success">Crear</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

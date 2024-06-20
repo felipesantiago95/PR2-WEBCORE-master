@@ -1,0 +1,42 @@
+﻿@model List<PR2_WEBCORE.Models.Clase>
+
+@{
+    ViewData["Title"] = "Clases";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Clase</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+<div class="container mt-5">
+    <h1>Lista de Clases</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Porcentaje</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IdClase</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.Porcentaje</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdClase" class="btn btn-warning">Editar</a> |
+						<a asp-action="Details" asp-route-id="@item.IdClase" class="btn btn-info"> Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdClase" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

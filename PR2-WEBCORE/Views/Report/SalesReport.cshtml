@@ -1,0 +1,118 @@
+﻿@model IEnumerable<PR2_WEBCORE.Models.Sale>
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Serialization;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+
+@{
+    ViewData["Title"] = "Sales Report";
+}
+
+<h2>Recaudación</h2>
+
+<form asp-action="SalesReport" method="get">
+    <div class="form-group">
+        <label for="startDate">Fecha Inicio</label>
+        <input type="date" class="form-control" id="startDate" name="startDate" />
+    </div>
+    <div class="form-group">
+        <label for="endDate">Fecha Fin</label>
+        <input type="date" class="form-control" id="endDate" name="endDate" />
+    </div>
+    <div class="form-group">
+        <label for="idUsuario">Usuario</label>
+        <select class="form-control" id="idUsuario" name="idUsuario">
+            <option value="">-- Select User --</option>
+            @foreach (var user in ViewBag.Users)
+            {
+                <option value="@user.Value">@user.Text</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="idEstablecimiento">Establicimiento</label>
+        <select class="form-control" id="idEstablecimiento" name="idEstablecimiento">
+            <option value="">-- Select Establishment --</option>
+            @foreach (var establishment in ViewBag.Establecimientos)
+            {
+                <option value="@establishment.Value">@establishment.Text</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="idCategoria">Categoria</label>
+        <select class="form-control" id="idCategoria" name="idCategoria">
+            <option value="">-- Select Category --</option>
+            @foreach (var category in ViewBag.Categorias)
+            {
+                <option value="@category.Value">@category.Text</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="idAforo">Aforo</label>
+        <select class="form-control" id="idAforo" name="idAforo">
+            <option value="">-- Select Capacity --</option>
+            @foreach (var aforo in ViewBag.Aforos)
+            {
+                <option value="@aforo.Value">@aforo.Text</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="idClase">Clase</label>
+        <select class="form-control" id="idClase" name="idClase">
+            <option value="">-- Select Class --</option>
+            @foreach (var clase in ViewBag.Clases)
+            {
+                <option value="@clase.Value">@clase.Text</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Generate Report</button>
+</form>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Establicimiento</th>
+                <th>Categoria</th>
+                <th>Aforo</th>
+                <th>Clase</th>
+                <th>Fecha</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IdSales</td>
+                    <td>@item.IdUsuarioNavigation?.Nombre</td>
+                    <td>@item.IdEstablecimientoNavigation?.RazonSocial</td>
+                    <td>@item.IdCategoriaNavigation?.Descripcion</td>
+                    <td>@item.IdAforoNavigation?.Descripcion</td>
+                    <td>@item.IdClaseNavigation?.Descripcion</td>
+                    <td>@item.FechaCreacion</td>
+                    <td>@item.Total</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-right"><strong>Total Recaudación:</strong></td>
+                <td><strong>@ViewBag.TotalSales</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+}
+else if (ViewBag.Users.Count > 0 || ViewBag.Establecimientos.Count > 0 || ViewBag.Categorias.Count > 0 || ViewBag.Aforos.Count > 0 || ViewBag.Clases.Count > 0)
+{
+    <div class="alert alert-info" role="alert">No results found for the selected criteria.</div>
+}
+
+
+

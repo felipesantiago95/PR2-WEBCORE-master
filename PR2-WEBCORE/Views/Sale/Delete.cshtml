@@ -1,0 +1,51 @@
+﻿@model PR2_WEBCORE.Models.Sale
+
+@{
+    ViewData["Title"] = "Eliminar Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Eliminar Venta</h1>
+
+<h3>¿Estás seguro que deseas eliminar esta venta?</h3>
+<div>
+    <h4>ID de Venta:</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">ID de Venta:</dt>
+        <dd class="col-sm-10">@Model.IdSales</dd>
+
+        <dt class="col-sm-2">Usuario:</dt>
+        <dd class="col-sm-10">@GetTextFromSelectList(ViewBag.Usuarios, (int)Model.IdUsuario)</dd>
+
+        <dt class="col-sm-2">Establecimiento:</dt>
+        <dd class="col-sm-10">@GetTextFromSelectList(ViewBag.Establecimientos, (int)Model.IdEstablecimiento)</dd>
+
+        <dt class="col-sm-2">Categoría:</dt>
+        <dd class="col-sm-10">@GetTextFromSelectList(ViewBag.Categorias, (int)Model.IdCategoria)</dd>
+
+        <dt class="col-sm-2">Aforo:</dt>
+        <dd class="col-sm-10">@GetTextFromSelectList(ViewBag.Aforos, (int)Model.IdAforo)</dd>
+
+        <dt class="col-sm-2">Clase:</dt>
+        <dd class="col-sm-10">@GetTextFromSelectList(ViewBag.Clases, (int)Model.IdClase)</dd>
+
+        <dt class="col-sm-2">Fecha de Creacion</dt>
+        <dd class="col-sm-10">@Model.FechaCreacion</dd>
+
+        <dt class="col-sm-2">Total:</dt>
+        <dd class="col-sm-10">@Model.Total</dd>
+    </dl>
+</div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="IdSales" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+@functions {
+    public string GetTextFromSelectList(List<SelectListItem> selectList, int selectedValue)
+    {
+        var item = selectList.FirstOrDefault(i => i.Value == selectedValue.ToString());
+        return item != null ? item.Text : "No encontrado";
+    }
+}

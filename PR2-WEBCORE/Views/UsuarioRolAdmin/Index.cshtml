@@ -1,0 +1,38 @@
+﻿@model IEnumerable<dynamic>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Usuario Roles</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <h2>Roles de Usuarios</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Descripción del Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Usuario</td>
+                        <td>@item.DescripcionRol</td>
+                        <td>
+                            <a asp-controller="UsuarioRolAdmin" asp-action="Edit" asp-route-id="@item.IdUserRoles" class="btn btn-primary">Editar</a>
+                            <a asp-controller="UsuarioRolAdmin" asp-action="Delete" asp-route-id="@item.IdUserRoles" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-controller="UsuarioRolAdmin" asp-action="Create" class="btn btn-success">Agregar Nuevo</a>
+    </div>
+</body>
+</html>

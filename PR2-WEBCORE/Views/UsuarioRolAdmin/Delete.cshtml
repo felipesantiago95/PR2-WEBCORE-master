@@ -1,0 +1,42 @@
+﻿@model PR2_WEBCORE.Models.UsuarioRol
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Eliminar UsuarioRol</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Eliminar Rol de Usuario</h2>
+
+        <div>
+            <h3>¿Está seguro que desea eliminar este rol del usuario?</h3>
+            <div>
+                <h4>UsuarioRol</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        Usuario
+                    </dt>
+                    <dd>
+                        @Model.IdUsuarioNavigation.Nombre
+                    </dd>
+                    <dt>
+                        Rol
+                    </dt>
+                    <dd>
+                        @Model.IdRolesNavigation.Descripcion
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="IdUserRoles" />
+                    <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

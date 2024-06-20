@@ -1,0 +1,50 @@
+﻿@model List<PR2_WEBCORE.Models.Sale>
+
+@{
+    ViewData["Title"] = "Lista de Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Recaudación</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+<div class="container mt-5">
+    <h1>Lista de Recaudación</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Crear Venta</a>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Establecimiento</th>
+                <th>Categoría</th>
+                <th>Aforo</th>
+                <th>Clase</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IdSales</td>
+                    <td>@item.IdUsuarioNavigation.Nombre</td>
+                    <td>@item.IdEstablecimientoNavigation.RazonSocial</td>
+                    <td>@item.IdCategoriaNavigation.Descripcion</td>
+                    <td>@item.IdAforoNavigation.Descripcion</td>
+                    <td>@item.IdClaseNavigation.Descripcion</td>
+                    <td>@item.Total</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.IdSales" class="btn btn-warning">Detalles</a> |
+                        <a asp-action="Edit" asp-route-id="@item.IdSales" class="btn btn-info">Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdSales" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<PR2_WEBCORE.Models.Sale>
+
+@{
+    ViewData["Title"] = "Sales Dashboard";
+}
+
+<h2>Sales Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <canvas id="salesByCategory" width="400" height="400"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="salesByClass" width="400" height="400"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Obtener datos de ventas desde el servidor
+        $.ajax({
+            url: '@Url.Action("SalesData", "Dashboard")',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                renderSalesByCategory(data);
+                renderSalesByClass(data);
+            }
+        });
+
+        // Función para renderizar gráfico de ventas por categoría
+        function renderSalesByCategory(salesData) {
+            var salesByCategory = salesData.reduce(function (acc, sale) {
+                var category = sale.idCategoriaNavigation.descripcion;
+                acc[category] = acc[category] || 0;
+                acc[category] += sale.total;
+                return acc;
+            }, {});
+
+            var ctx = document.getElementById('salesByCategory').getContext('2d');
+            var salesByCategoryChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(salesByCategory),
+                    datasets: [{
+                        label: 'Sales by Category',
+                        data: Object.values(salesByCategory),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        // Función para renderizar gráfico de ventas por clase
+        function renderSalesByClass(salesData) {
+            var salesByClass = salesData.reduce(function (acc, sale) {
+                var clase = sale.idClaseNavigation.descripcion;
+                acc[clase] = acc[clase] || 0;
+                acc[clase] += sale.total;
+                return acc;
+            }, {});
+
+            var ctx = document.getElementById('salesByClass').getContext('2d');
+            var salesByClassChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(salesByClass),
+                    datasets: [{
+                        label: 'Sales by Class',
+                        data: Object.values(salesByClass),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+    </script>
+}

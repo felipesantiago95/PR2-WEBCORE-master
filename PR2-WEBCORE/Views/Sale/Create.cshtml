@@ -1,0 +1,55 @@
+﻿@model PR2_WEBCORE.Models.Sale
+
+@{
+    ViewData["Title"] = "Crear Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Crear Venta</h1>
+
+<div class="container mt-5">
+    <form asp-action="Create" asp-controller="Sale" method="post">
+        @if (ViewBag.Usuarios == null || ViewBag.Establecimientos == null || ViewBag.Categorias == null || ViewBag.Aforos == null || ViewBag.Clases == null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error:</strong> No se pudieron cargar los datos necesarios para la creación de la venta.
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label asp-for="IdUsuario">Usuario</label>
+                <select asp-for="IdUsuario" class="form-control" asp-items="@(ViewBag.Usuarios as List<SelectListItem>)"></select>
+                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEstablecimiento">Establecimiento</label>
+                <select asp-for="IdEstablecimiento" class="form-control" asp-items="@(ViewBag.Establecimientos as List<SelectListItem>)"></select>
+                <span asp-validation-for="IdEstablecimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCategoria">Categoría</label>
+                <select asp-for="IdCategoria" class="form-control" asp-items="@(ViewBag.Categorias as List<SelectListItem>)"></select>
+                <span asp-validation-for="IdCategoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdAforo">Aforo</label>
+                <select asp-for="IdAforo" class="form-control" asp-items="@(ViewBag.Aforos as List<SelectListItem>)"></select>
+                <span asp-validation-for="IdAforo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdClase">Clase</label>
+                <select asp-for="IdClase" class="form-control" asp-items="@(ViewBag.Clases as List<SelectListItem>)"></select>
+                <span asp-validation-for="IdClase" class="text-danger"></span>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
